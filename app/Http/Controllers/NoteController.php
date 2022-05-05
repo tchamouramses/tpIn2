@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Filiere;
 use App\Models\Note;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class NoteController extends Controller
@@ -14,7 +16,9 @@ class NoteController extends Controller
      */
     public function index()
     {
-        //
+        $students = Student::paginate(10);
+        $filieres = Filiere::all();
+        return view('notes.index', compact('students', 'filieres'));
     }
 
     /**

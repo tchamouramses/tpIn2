@@ -17,8 +17,9 @@
         </a>
     </li>
     <li>
-        <a href=" #" class="nav-link text-white">
-            notes
+        <a href=" {{ route('note.index') }}"
+            class="nav-link {{ Request::is('note*') ? 'text-secondary' : 'text-white' }}">
+            Notes
         </a>
     </li>
 </ul>
