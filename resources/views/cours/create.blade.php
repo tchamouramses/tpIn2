@@ -11,7 +11,7 @@
                     @csrf
                     @include('cours.form')
                     <div class="mt-2">
-                        <button type="submit" class="btn btn-success">Ajouter</button>
+                        <button type="submit" class="btn-default">Ajouter</button>
                     </div>
                 </form>
             </div>

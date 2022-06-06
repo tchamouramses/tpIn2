@@ -4,7 +4,7 @@
     <div class="container" id="main">
         <div class="card">
             <div class="card-header">
-                <h4 style="color: black">Ajout des etudiants</h4>
+                <h4 style="color: black">Ajout d'un etudiant</h4>
             </div>
             <div class="card-body">
                 <form method="POST" action="{{ route('student.store') }}">

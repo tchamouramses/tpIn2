@@ -22,7 +22,7 @@
                             <th>Telephone</th>
                             <th>Date De Naissance</th>
                             <th>Filiere</th>
-                            <th>Action</th>
+                            <th>Actions</th>
                         </thead>
                         <tbody>
                             @forelse ($students as $item)
@@ -33,9 +33,19 @@
                                     <td>{{ $item->birthdate }}</td>
                                     <td>{{ $item->filiere->name }}</td>
                                     <td>
-                                        <button class="btn btn-danger">
-                                            supprimer
-                                        </button>
+                                        <a class="btn btn-secondary" href="{{ route('student.show', $item->id) }}">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a class="btn btn-primary" href="{{ route('student.edit', $item->id) }}">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                        <form action="{{ route('student.delete', $item->id) }}" method="POST">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @empty

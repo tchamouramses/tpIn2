@@ -90,6 +90,8 @@ class CourController extends Controller
      */
     public function destroy(Cour $cour)
     {
-        //
+        $cour->delete();
+        Toastr::success('Suppression effectué avec succes!!!');
+        return back();
     }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Filiere;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Toastr;
 
 class StudentController extends Controller
 {
@@ -47,6 +49,7 @@ class StudentController extends Controller
         ]);
         $data = $request->except('_token');
         Student::create($data);
+        Toastr::success('Etudiant ajouter avec success');
         return redirect()->route('student.index');
     }
 
@@ -58,7 +61,7 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        //
+        return view('student.show', compact('student'));
     }
 
     /**
@@ -69,7 +72,8 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        //
+        $filieres = Filiere::all();
+        return view('student.edit', compact('filieres', 'student'));
     }
 
     /**
@@ -81,7 +85,17 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|unique:students,email,' . $student->id,
+            'phone' => 'required',
+            'filiere_id' => 'required|exists:filieres,id',
+            'birthdate' => 'required',
+        ]);
+        $data = $request->except('_token');
+        $student->update($data);
+        Toastr::success('Etudiant Modifié avec success');
+        return redirect()->route('student.index');
     }
 
     /**
@@ -92,6 +106,18 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+        $student->delete();
+        Toastr::success('suppression effectuer avec success');
+        return back();
+    }
+
+    public function guard()
+    {
+        $user = Auth::user();
+        if ($user->email != 'admin@admin.com') {
+            return $user;
+        } else {
+            return response()->json(['key' => 'l\'utilisateur n\'est pas un admin']);
+        }
     }
 }
